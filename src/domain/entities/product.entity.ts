@@ -9,7 +9,7 @@ interface propsUpdate {
   category?: CategoryId;
 }
 
-export class ProductEntity {
+export class Product {
   private readonly _id: string;
   private readonly _props: ProductProps;
   constructor(id: string, props: ProductProps) {
