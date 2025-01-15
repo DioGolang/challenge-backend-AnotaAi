@@ -42,4 +42,10 @@ Você precisa desenvolver este teste usando as seguintes tecnologias:
 - Node.js para o backend.
 - Express.js como o framework web.(aqui será usado Nestjs)
 
+---
+### Diagrama representando a estrutura final do projeto:
+
+![Diagram representing the final structure of the project:](diagram.png)
+
+---
 Repositório do desafio original : https://github.com/githubanotaai/new-test-backend-nodejs?tab=readme-ov-file
