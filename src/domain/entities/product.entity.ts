@@ -17,7 +17,7 @@ export class Product {
     this._props = props;
   }
 
-  update(props: Partial<propsUpdate>) {
+  updateDetails(props: Partial<propsUpdate>) {
     if (props.title) this._props.title = props.title;
     if (props.description) this._props.description = props.description;
     if (props.price) this._props.price = props.price;
