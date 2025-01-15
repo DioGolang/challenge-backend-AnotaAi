@@ -1,0 +1,16 @@
+services:
+  mongodb:
+    image: bitnami/mongodb:latest
+    environment:
+      MONGODB_ROOT_PASSWORD: ${MONGODB_ROOT_PASSWORD}
+      MONGODB_DATABASE: ${MONGODB_DATABASE}
+      MONGODB_USERNAME: ${MONGODB_USER}
+      MONGODB_PASSWORD: ${MONGODB_PASSWORD}
+    ports:
+      - "27017:27017"
+    volumes:
+      - ./.docker/mongodb_data:/bitnami/mongodb/data:z
+    restart: always
+
+volumes:
+  mongodb_data:
