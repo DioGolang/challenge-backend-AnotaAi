@@ -1,6 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { mongodbConfig } from '../../../config/mongodb.config';
+import { mongodbConfig } from '../../../../config/mongodb.config';
 import { Category, CategorySchema } from '../../mongodb/schema/category.schema';
 import { Product, ProductSchema } from '../../mongodb/schema/product.schema';
 import { ConfigService } from '@nestjs/config';

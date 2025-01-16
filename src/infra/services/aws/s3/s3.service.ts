@@ -2,25 +2,20 @@ import { Injectable } from '@nestjs/common';
 import { S3 } from '../../../../ports/services/s3.interface';
 import { ConfigService } from '@nestjs/config';
 import { S3Client } from '@aws-sdk/client-s3';
+import { s3Config } from '../../../../config/s3.config';
 
 @Injectable()
 export class S3Service implements S3 {
   private client: S3Client;
-  private bucketName = this.configService.get('S3_BUCKET_NAME');
+  private readonly bucketName: string;
 
   constructor(private readonly configService: ConfigService) {
-    const s3_region = this.configService.get('S3_REGION');
-    if (!s3_region) {
-      throw new ReferenceError('Environment variable S3_REGION is required');
+    const s3BucketName = this.configService.get<string>('S3_BUCKET_NAME');
+    if (!s3BucketName) {
+      throw new Error('S3_BUCKET_NAME is not defined');
     }
-    this.client = new S3Client({
-      region: s3_region,
-      credentials: {
-        accessKeyId: this.configService.get('S3_ACCESS_KEY_ID'),
-        secretAccessKey: this.configService.get('S3_SECRET_ACCESS_KEY'),
-      },
-      forcePathStyle: true,
-    });
+    this.bucketName = s3BucketName;
+    this.client = new S3Client(s3Config(configService));
   }
 
   async uploadFile(key: string, data: string): Promise<void> {
