@@ -1,19 +1,18 @@
 import { ProductProps } from '../interfaces/props/product-props.interfaces';
 import { Price } from '../value-objects/price.vo';
-import { CategoryId } from '../value-objects/category-id.vo';
+import { Entity } from './entity';
 
 interface propsUpdate {
   title?: string;
   description?: string;
   price?: Price;
-  category?: CategoryId;
+  category?: string;
 }
 
-export class Product {
-  private readonly _id: string;
+export class Product extends Entity {
   private readonly _props: ProductProps;
   constructor(id: string, props: ProductProps) {
-    this._id = id;
+    super(id);
     this._props = props;
   }
 
@@ -22,9 +21,5 @@ export class Product {
     if (props.description) this._props.description = props.description;
     if (props.price) this._props.price = props.price;
     if (props.category) this._props.categoryId = props.category;
-  }
-
-  get id(): string {
-    return this._id;
   }
 }
