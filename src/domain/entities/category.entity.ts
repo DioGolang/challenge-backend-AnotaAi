@@ -11,7 +11,7 @@ export class Category extends Entity {
   }
 
   updateDetails(title: string, description: string): void {
-    this.title = title;
-    this.description = description;
+    if (title) this.title = title;
+    if (description) this.description = description;
   }
 }
