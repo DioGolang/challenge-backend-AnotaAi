@@ -10,7 +10,7 @@ export class Category extends Entity {
     super(id);
   }
 
-  updateDetails(title: string, description: string): void {
+  updateDetails(title?: string, description?: string): void {
     if (title) this.title = title;
     if (description) this.description = description;
   }

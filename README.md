@@ -4,7 +4,7 @@ No desafio original é preciso desevolver com Express.js como framework web, ire
 
 ---
 
-## O desafio
+## O Desafio
 
 Desenvolver uma API usando o Node.js para um sistema de gerenciamento de catálogo de produtos em um aplicativo de mercado. Você deve analisar e converter as seguintes histórias de usuários em rotas para o aplicativo:
 
