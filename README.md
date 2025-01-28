@@ -16,9 +16,9 @@ Desenvolver uma API usando o Node.js para um sistema de gerenciamento de catálo
 
 - Como usuário, quero registrar uma categoria com seu proprietário, para que eu possa acessar seus dados no futuro (título, descrição, ID do proprietário).
 
-- Como usuário, quero associar um produto a uma categoria.
+- Como usuário, quero associar um produto a uma categoria;
 
-- Como usuário, quero atualizar os dados de um produto ou categoria.
+- Como usuário, quero atualizar os dados de um produto ou categoria;
 
 - Como usuário, quero excluir um produto ou categoria do meu catálogo.
 
