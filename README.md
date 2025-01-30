@@ -25,7 +25,7 @@ Desenvolver uma API usando o Node.js para um sistema de gerenciamento de catálo
 - Um produto só pode ser associado a uma categoria por vez.
 
 - Suponha que os produtos e categorias pertençam apenas a um proprietário.
-dfdf
+
 - Tenha em mente que este é um catálogo de produtos on-line, o que significa que haverá várias solicitações para editar itens / categorias por segundo, além de acessar o ponto de extremidade de pesquisa do catálogo.
 
 - Considere o catálogo de produtos como uma compilação JSON de todas as categorias e itens disponíveis de propriedade de um usuário. Dessa forma, o endpoint de pesquisa de catálogo não precisa buscar informações do banco de dados.
