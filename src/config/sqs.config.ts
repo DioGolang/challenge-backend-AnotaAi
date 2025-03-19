@@ -4,9 +4,9 @@ import { SQSClientConfig } from '@aws-sdk/client-sqs';
 export const sqsConfig = async (
   configService: ConfigService,
 ): Promise<SQSClientConfig> => ({
-  region: configService.get<string>('SQS_REGION'),
+  region: configService.get<string>('AWS_REGION_SQS'),
   credentials: {
-    accessKeyId: configService.get<string>('SQS_ACCESS_KEY_ID'),
-    secretAccessKey: configService.get<string>('SQS_SECRET_ACCESS_KEY'),
+    accessKeyId: configService.get<string>('AWS_ACCESS_KEY_ID'),
+    secretAccessKey: configService.get<string>('AWS_SECRET_ACCESS_KEY'),
   },
 });
