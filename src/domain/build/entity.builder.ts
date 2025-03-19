@@ -1,7 +1,7 @@
 export abstract class EntityBuilder<Entity> {
   protected _id: string;
 
-  withId(id: string): this {
+  setId(id: string): this {
     this._id = id;
     return this;
   }
