@@ -9,7 +9,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
     @InjectModel(Category.name) private readonly categoryModel: Model<Category>,
   ) {}
 
-  findByOwnerId(ownerId: string): Promise<CategoryEntity[]> {
-    throw new Error('Method not implemented.');
+  async findByOwnerId(ownerId: string): Promise<CategoryEntity[]> {
+    return await this.categoryModel.findOne({ ownerId }).exec();
   }
 }

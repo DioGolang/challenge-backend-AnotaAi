@@ -9,12 +9,14 @@ export class ProductRepositoryImpl implements ProductRepository {
     @InjectModel(Product.name) private readonly productModel: Model<Product>,
   ) {}
 
-  save(product: ProductEntity): Promise<void> {
-    throw new Error('Method not implemented.');
+  async save(product: ProductEntity): Promise<void> {
+    await new this.productModel(product).save();
   }
-  findByOwnerId(ownerId: string): Promise<ProductEntity[]> {
+  async findByOwnerId(ownerId: string): Promise<ProductEntity[]> {
     throw new Error('Method not implemented.');
+    // return await this.productModel.findOne({ ownerId }).exec();
   }
+
   findById(id: string): Promise<ProductEntity | null> {
     throw new Error('Method not implemented.');
   }
