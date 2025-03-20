@@ -10,6 +10,7 @@ export class CategoryRepositoryImpl implements CategoryRepository {
   ) {}
 
   async findByOwnerId(ownerId: string): Promise<CategoryEntity[]> {
-    return await this.categoryModel.findOne({ ownerId }).exec();
+    throw new Error('Method not implemented.');
+    //return await this.categoryModel.findOne({ ownerId }).exec();
   }
 }
