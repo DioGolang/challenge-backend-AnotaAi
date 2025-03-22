@@ -2,7 +2,7 @@
 
 ---
 
-No desafio original é preciso desevolver com Express.js como framework web, irei utilizar Nestjs.js, a ideia é desenvolver uma api com as regras de negócio solicitadas. também será utilizado o banco de dados MongoDB, AWS SQS para notificações de alterações no catálogo e AWS S3 para armazenar o catálogo JSON.  
+No desafio original é preciso desevolver com Express.js como framework web, irei utilizar Nestjs.js, a ideia é desenvolver uma api com as regras de negócio solicitadas. também será utilizado o banco de dados DocumentDB da AWS, no desafio original apenas é necessário um mongoDB, AWS SQS para notificações de alterações no catálogo e AWS S3 para armazenar o catálogo JSON. projeto ficará em uma EC2.   
 
 ---
 
