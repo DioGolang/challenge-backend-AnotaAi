@@ -4,6 +4,6 @@ import { MongodbConfigModule } from './persistence/database/mongodb/mongodb-conf
 import { RepositoriesModule } from './persistence/mongodb/repositories/repositories.module';
 
 @Module({
-  imports: [ServicesModule, MongodbConfigModule, RepositoriesModule]
+  imports: [ServicesModule, MongodbConfigModule, RepositoriesModule],
 })
 export class InfraModule {}

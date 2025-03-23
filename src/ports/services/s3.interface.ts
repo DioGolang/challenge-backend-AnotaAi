@@ -1,5 +1,5 @@
 export interface S3 {
-  uploadFile(key: string, data: string): Promise<void>;
-  downloadFile(key: string): Promise<string>;
-  getFileUrl(key: string): Promise<{ url: string }>;
+  uploadFile(ownerId: string, data: string): Promise<void>;
+  downloadFile(ownerId: string): Promise<string>;
+  getFileUrl(ownerId: string): Promise<{ url: string }>;
 }

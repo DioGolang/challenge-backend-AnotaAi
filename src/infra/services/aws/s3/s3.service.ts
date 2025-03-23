@@ -18,15 +18,17 @@ export class S3Service implements S3 {
     this.client = new S3Client(s3Config(configService));
   }
 
-  async uploadFile(key: string, data: string): Promise<void> {
+  async uploadFile(ownerId: string, data: string): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
-  downloadFile(key: string): Promise<string> {
+  downloadFile(ownerId: string): Promise<string> {
     throw new Error('Method not implemented.');
   }
 
-  async getFileUrl(key: string) {
-    return { url: `https://${this.bucketName}.s3.amazonaws.com/${key}` };
+  async getFileUrl(ownerId: string): Promise<{ url: string }> {
+    return {
+      url: `https://${this.bucketName}.s3.amazonaws.com/catalogs/${ownerId}.json`,
+    };
   }
 }
