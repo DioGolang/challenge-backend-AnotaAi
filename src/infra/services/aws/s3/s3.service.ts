@@ -1,13 +1,38 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { S3 } from '../../../../ports/services/s3.interface';
 import { ConfigService } from '@nestjs/config';
-import { S3Client } from '@aws-sdk/client-s3';
+import {
+  GetObjectCommand,
+  PutObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { s3Config } from '../../../../config/s3.config';
+import { S3UpdateErrorException } from '../../../../domain/exceptions/s3-update-error.exception';
+
+interface Product {
+  productId: string;
+  title: string;
+  description: string;
+  price: number;
+}
+
+interface Category {
+  categoryId: string;
+  title: string;
+}
+
+interface Catalog {
+  ownerId: string;
+  products: Product[];
+  categories: Category[];
+  updatedAt: string;
+}
 
 @Injectable()
 export class S3Service implements S3 {
   private client: S3Client;
   private readonly bucketName: string;
+  private readonly logger = new Logger(S3Service.name);
 
   constructor(private readonly configService: ConfigService) {
     const s3BucketName = this.configService.get<string>('S3_BUCKET_NAME');
@@ -18,15 +43,61 @@ export class S3Service implements S3 {
     this.client = new S3Client(s3Config(configService));
   }
 
-  async uploadFile(ownerId: string, data: string): Promise<void> {
-    throw new Error('Method not implemented.');
+  async uploadCatalog(
+    ownerId: string,
+    data: Record<string, any>,
+  ): Promise<void> {
+    try {
+      const key = `catalogs/${ownerId}.json`;
+      const params = {
+        Bucket: this.bucketName,
+        Key: key,
+        Body: JSON.stringify(data),
+        ContentType: 'application/json',
+      };
+      await this.client.send(new PutObjectCommand(params));
+      this.logger.log(`Catalog uploaded to s3://${this.bucketName}/${key}`);
+    } catch (error) {
+      this.logger.error('Error uploading catalog', error);
+      throw new S3UpdateErrorException('Error uploading catalog');
+    }
   }
 
-  downloadFile(ownerId: string): Promise<string> {
-    throw new Error('Method not implemented.');
+  async downloadCatalog(ownerId: string): Promise<Catalog> {
+    try {
+      const key = `catalogs/${ownerId}.json`;
+      const params = {
+        Bucket: this.bucketName,
+        Key: key,
+      };
+
+      const { Body } = await this.client.send(new GetObjectCommand(params));
+
+      if (Body instanceof ReadableStream) {
+        const reader = Body.getReader();
+        const decoder = new TextDecoder();
+        const chunks: Uint8Array[] = [];
+
+        let done = false;
+        while (!done) {
+          const { value, done: isDone } = await reader.read();
+          done = isDone;
+          if (value) chunks.push(value);
+        }
+        const decodedString = decoder.decode(Uint8Array.from(chunks.flat()));
+        const catalog: Catalog = JSON.parse(decodedString);
+
+        return catalog;
+      } else {
+        throw new S3UpdateErrorException('Failed to read file content');
+      }
+    } catch (error) {
+      this.logger.error('Error downloading catalog', error);
+      throw new S3UpdateErrorException('Error downloading catalog');
+    }
   }
 
-  async getFileUrl(ownerId: string): Promise<{ url: string }> {
+  async getCatalogUrl(ownerId: string): Promise<{ url: string }> {
     return {
       url: `https://${this.bucketName}.s3.amazonaws.com/catalogs/${ownerId}.json`,
     };
