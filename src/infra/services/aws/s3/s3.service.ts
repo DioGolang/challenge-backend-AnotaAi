@@ -3,6 +3,7 @@ import { S3 } from '../../../../ports/services/s3.interface';
 import { ConfigService } from '@nestjs/config';
 import {
   GetObjectCommand,
+  GetObjectCommandInput,
   PutObjectCommand,
   S3Client,
 } from '@aws-sdk/client-s3';
@@ -10,22 +11,20 @@ import { s3Config } from '../../../../config/s3.config';
 import { S3UpdateErrorException } from '../../../../domain/exceptions/s3-update-error.exception';
 
 interface Product {
-  productId: string;
   title: string;
   description: string;
-  price: number;
+  price: { amount: number; currency: string };
 }
 
 interface Category {
-  categoryId: string;
-  title: string;
+  category_title: string;
+  category_description: string;
+  items: Product[];
 }
 
 interface Catalog {
   ownerId: string;
-  products: Product[];
-  categories: Category[];
-  updatedAt: string;
+  catalog: Category[];
 }
 
 @Injectable()
@@ -70,27 +69,8 @@ export class S3Service implements S3 {
         Bucket: this.bucketName,
         Key: key,
       };
-
-      const { Body } = await this.client.send(new GetObjectCommand(params));
-
-      if (Body instanceof ReadableStream) {
-        const reader = Body.getReader();
-        const decoder = new TextDecoder();
-        const chunks: Uint8Array[] = [];
-
-        let done = false;
-        while (!done) {
-          const { value, done: isDone } = await reader.read();
-          done = isDone;
-          if (value) chunks.push(value);
-        }
-        const decodedString = decoder.decode(Uint8Array.from(chunks.flat()));
-        const catalog: Catalog = JSON.parse(decodedString);
-
-        return catalog;
-      } else {
-        throw new S3UpdateErrorException('Failed to read file content');
-      }
+      const decodedString = await this.getObjectBody(params);
+      return JSON.parse(decodedString);
     } catch (error) {
       this.logger.error('Error downloading catalog', error);
       throw new S3UpdateErrorException('Error downloading catalog');
@@ -101,5 +81,25 @@ export class S3Service implements S3 {
     return {
       url: `https://${this.bucketName}.s3.amazonaws.com/catalogs/${ownerId}.json`,
     };
+  }
+
+  private async getObjectBody(params: GetObjectCommandInput): Promise<string> {
+    const { Body } = await this.client.send(new GetObjectCommand(params));
+
+    if (Body && Body instanceof ReadableStream) {
+      const reader = Body.getReader();
+      const decoder = new TextDecoder();
+      const chunks: Uint8Array[] = [];
+
+      let done = false;
+      while (!done) {
+        const { value, done: isDone } = await reader.read();
+        done = isDone;
+        if (value) chunks.push(value);
+      }
+      return decoder.decode(Uint8Array.from(chunks.flat()));
+    } else {
+      throw new S3UpdateErrorException('Failed to read file content');
+    }
   }
 }
