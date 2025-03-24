@@ -12,7 +12,7 @@ export class Product {
   @Prop()
   title: string;
 
-  @Prop({ CategorySchema })
+  @Prop({ type: CategorySchema })
   category: Category;
 
   @Prop({ type: Object })

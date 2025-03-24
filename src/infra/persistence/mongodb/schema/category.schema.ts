@@ -8,7 +8,7 @@ export class Category {
   @Prop()
   ownerId: string;
 
-  @Prop()
+  @Prop({ unique: true })
   title: string;
 
   @Prop()
