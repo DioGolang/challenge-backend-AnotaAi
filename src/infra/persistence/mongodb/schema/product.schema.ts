@@ -15,8 +15,8 @@ export class Product {
   @Prop({ CategorySchema })
   category: Category;
 
-  @Prop()
-  price: number;
+  @Prop({ type: Object })
+  price: { amount: number; currency: string };
 
   @Prop()
   description: string;
