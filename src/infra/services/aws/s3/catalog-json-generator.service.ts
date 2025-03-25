@@ -18,7 +18,7 @@ export class CatalogJsonGeneratorService {
   async generateCatalogJson(ownerId: string) {
     this.apiLogger.log('Generating catalog.json');
     const categories = await this.categoryModel.findByOwnerId(ownerId);
-    const products = await this.productModel.findByOwnerId(ownerId);
+    const products = await this.productModel.findByOwnerWithCategory(ownerId);
 
     const catalog = {
       ownerId: ownerId,
@@ -26,7 +26,7 @@ export class CatalogJsonGeneratorService {
         category_title: category.title,
         category_description: category.description,
         items: products
-          .filter((product) => product.category.title === category.title)
+          .filter((product) => product.categoryId.title === category.title)
           .map((product) => ({
             title: product.title,
             description: product.description,

@@ -25,6 +25,13 @@ export class ProductRepositoryImpl implements ProductRepository {
     return await this.productModel.find({ ownerId }).exec();
   }
 
+  async findByOwnerWithCategory(ownerId: string): Promise<Product[]> {
+    return await this.productModel
+      .find({ ownerId: ownerId })
+      .populate('categoryId')
+      .exec();
+  }
+
   async findById(id: string): Promise<Product | null> {
     return await this.productModel.findOne({ _id: id }).exec();
   }

@@ -1,19 +1,19 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
-import { Category, CategorySchema } from './category.schema';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Category } from './category.schema';
 
 export type ProductDocument = HydratedDocument<Product>;
 
 @Schema()
 export class Product {
   @Prop()
-  owner: string;
+  ownerId: string;
 
   @Prop()
   title: string;
 
-  @Prop({ type: CategorySchema })
-  category: Category;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  categoryId: Category;
 
   @Prop({ type: Object })
   price: { amount: number; currency: string };

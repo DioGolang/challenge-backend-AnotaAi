@@ -6,6 +6,7 @@ export interface ProductRepository {
   updateById(id: string, product: ProductEntity): Promise<void>;
   updateByTitle(title: string, product: ProductEntity): Promise<void>;
   findByOwnerId(ownerId: string): Promise<Product[]>;
+  findByOwnerWithCategory(ownerId: string): Promise<Product[]>;
   findById(id: string): Promise<Product | null>;
   findByTitle(id: string): Promise<Product | null>;
   deleteById(id: string): Promise<void>;
