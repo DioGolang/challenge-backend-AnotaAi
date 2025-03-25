@@ -6,9 +6,11 @@ import { DomainModule } from './domain/domain.module';
 import { InfraModule } from './infra/infra.module';
 import { PresentationModule } from './presentation/presentation.module';
 import { ConfigModule } from '@nestjs/config';
+import { CqrsModule } from '@nestjs/cqrs';
 
 @Module({
   imports: [
+    CqrsModule.forRoot(),
     ApplicationModule,
     DomainModule,
     InfraModule,
