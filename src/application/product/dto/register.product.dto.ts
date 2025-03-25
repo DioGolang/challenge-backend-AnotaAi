@@ -2,7 +2,7 @@ import { IsString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { PriceDto } from '../../shared/dto/price.dto';
 
-export class CreateProductDto {
+export class RegisterProductDto {
   @IsString()
   public readonly title: string;
 
