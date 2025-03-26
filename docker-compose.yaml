@@ -12,5 +12,18 @@ services:
       - ./.docker/mongodb_data:/bitnami/mongodb/data:z
     restart: always
 
+  postgres:
+    image: postgres:17.4
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./.docker/postgres_data:/var/lib/postgresql/data:z
+    restart: always
+
 volumes:
   mongodb_data:
+  postgres_data:
