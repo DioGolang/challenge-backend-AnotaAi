@@ -10,7 +10,8 @@ export const typeormConfig = async (
   username: configService.get<string>('POSTGRES_USER'),
   password: configService.get<string>('POSTGRES_PASSWORD'),
   database: configService.get<string>('POSTGRES_DB'),
-  entities: [],
+  entities: [
+    __dirname + '/../infra/persistence/postgres/entities/**/*.entity{.ts,.js}',
+  ],
   synchronize: true,
 });
-//  entities: ['dist/**/*.entity{.ts,.js}'],
