@@ -1,10 +1,6 @@
 import { Entity } from './entity';
 import { CategoryProps } from '../interfaces/props/category-props.interface';
-
-interface propsUpdate {
-  title?: string;
-  description?: string;
-}
+import { ValidationError } from '../exceptions/validation-error';
 
 export class Category extends Entity {
   constructor(
@@ -12,10 +8,33 @@ export class Category extends Entity {
     public readonly _props: CategoryProps,
   ) {
     super(id);
+    this.validate();
   }
 
-  updateDetails(props: Partial<propsUpdate>): void {
-    if (props.title) this._props.title = props.title;
-    if (props.description) this._props.description = props.description;
+  updateTitle(newTitle: string): void {
+    this.validateTitle();
+    this._props.title = newTitle;
+  }
+
+  updateDescription(newDescription: string): void {
+    this.validateDescription();
+    this._props.description = newDescription;
+  }
+
+  private validate(): void {
+    this.validateTitle();
+    this.validateDescription();
+  }
+
+  private validateDescription(): void {
+    if (!this._props.description.trim())
+      throw new ValidationError('Description cannot be empty.');
+  }
+
+  private validateTitle(): void {
+    if (!this._props.title.trim())
+      throw new ValidationError('Title cannot be empty.');
+    if (this._props.title.length < 3)
+      throw new ValidationError('Title is too short.');
   }
 }

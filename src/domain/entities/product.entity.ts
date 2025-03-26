@@ -25,12 +25,4 @@ export class Product extends Entity {
     if (props.price) this._props.price = props.price;
     if (props.categoryId) this._props.categoryId = props.categoryId;
   }
-
-  public addDomainEvent(event: DomainEvent): void {
-    this.domainsEvents.push(event);
-  }
-
-  public getDomainEvents(): DomainEvent[] {
-    return this.domainsEvents;
-  }
 }
