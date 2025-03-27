@@ -2,9 +2,10 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ApiLogger } from '../../../api-logger/api-logger.service';
 import { CategoryRepository } from '../../../../ports/repositories/category.repository';
 import { ProductRepository } from '../../../../ports/repositories/product.repository';
+import { CatalogStorage } from '../../../../ports/storage/catalog-storage.interface';
 
 @Injectable()
-export class CatalogJsonGeneratorService {
+export class CatalogJsonGeneratorService implements CatalogStorage {
   constructor(
     @Inject('ProductRepository')
     private readonly productModel: ProductRepository,

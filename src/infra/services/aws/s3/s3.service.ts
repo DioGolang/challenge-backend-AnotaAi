@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { S3 } from '../../../../ports/services/s3.interface';
+import { S3 } from '../../../../ports/storage/s3.interface';
 import { ConfigService } from '@nestjs/config';
 import {
   GetObjectCommand,
