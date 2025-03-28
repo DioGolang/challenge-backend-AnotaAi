@@ -7,6 +7,7 @@ import { InfraModule } from './infra/infra.module';
 import { PresentationModule } from './presentation/presentation.module';
 import { ConfigModule } from '@nestjs/config';
 import { CqrsModule } from '@nestjs/cqrs';
+import { CatalogModule } from './apresentation/api/controllers/catalog/catalog.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CqrsModule } from '@nestjs/cqrs';
     InfraModule,
     PresentationModule,
     ConfigModule.forRoot({ isGlobal: true, envFilePath: '.env' }),
+    CatalogModule,
   ],
   controllers: [AppController],
   providers: [AppService],
