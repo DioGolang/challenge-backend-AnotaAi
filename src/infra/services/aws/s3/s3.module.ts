@@ -7,6 +7,13 @@ import { ProductModule } from '../../../persistence/mongodb/repositories/product
 
 @Module({
   imports: [ApiLoggerModule, CategoryModule, ProductModule],
-  providers: [S3Service, CatalogJsonGeneratorService],
+  providers: [
+    {
+      provide: 'S3',
+      useClass: S3Service,
+    },
+    CatalogJsonGeneratorService,
+  ],
+  exports: ['S3', CatalogJsonGeneratorService],
 })
 export class S3Module {}
